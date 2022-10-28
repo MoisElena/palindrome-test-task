@@ -1,0 +1,29 @@
+services:
+  db:
+    container_name: postgres
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+    ports:
+      - 5432:5432
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api
+    image: django_project_test1:latest
+    command: bash -c "python manage.py migrate && 
+                      python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - 8000:8000
+    environment:
+      - DB_HOST=db
+      - DB_NAME=postgres
+      - DB_USER=postgres
+      - DB_PASS=postgres
+      - DB_PORT=5432
+    depends_on:
+      - db
