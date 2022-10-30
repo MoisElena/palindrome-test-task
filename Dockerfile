@@ -11,9 +11,3 @@ COPY requirements.txt /django_project/
 RUN pip install -r /django_project/requirements.txt
 
 WORKDIR /django_project
-
-# RUN python manage.py migrate
-    # && python manage.py createsuperuser \
-    #     --noinput \
-    #     --username ${DJANGO_SUPERUSER_USERNAME} \
-    #     --email ${DJANGO_SUPERUSER_EMAIL}\

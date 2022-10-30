@@ -1,4 +1,3 @@
-from pickle import TRUE
 from rest_framework import serializers
 from song.models import Artist, Album, Song
 
@@ -29,9 +28,17 @@ class AlbumAndSongSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'year', 'artist', 'song']
         
 
-class SongCatalogSerializer(serializers.ModelSerializer):
+class AlbumOfArtistSerializer(serializers.ModelSerializer):
+    album = AlbumSerializer(many=True, read_only=True)
+    
+    class Meta:
+        model = Artist
+        fields = ['id', 'name', 'album']
+
+
+class CatalogSerializer(serializers.ModelSerializer):
     album = AlbumAndSongSerializer(many=True, read_only=True)
     
     class Meta:
-        model= Artist
-        fields = ['id', 'name', 'album'] 
+        model = Artist
+        fields = ['id', 'name', 'album']
